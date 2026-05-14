@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>converter — rep.family</title>
-    <link rel="icon" href="assets/img/logo.png">
-    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="../assets/img/logo.png">
+    <link rel="stylesheet" href="../style.css">
     <style>
         .converter-section {
             flex: 1;
@@ -111,9 +111,6 @@
             font-size: 0.82rem;
             font-family: Arial, sans-serif;
             padding: 10px 6px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
             word-break: break-all;
             white-space: normal;
         }
@@ -157,21 +154,21 @@
     <header>
         <nav>
             <div class="logo">
-                <a href="index.html"><img src="assets/img/banner_no_bg.png" alt="rep.family"></a>
+                <a href="../"><img src="../assets/img/banner_no_bg.png" alt="rep.family"></a>
             </div>
             <ul class="nav-links">
-                <li><a href="index.html">spreadsheet</a></li>
-                <li><a href="tracking.html">tracking</a></li>
-                <li><a href="converter.html">converter</a></li>
+                <li><a href="../">spreadsheet</a></li>
+                <li><a href="../tracking/">tracking</a></li>
+                <li><a href="../converter/">converter</a></li>
                 <li><a href="https://discord.gg/pMD3927PcZ" target="_blank">
-                    <img src="assets/img/discord_logo.png" title="discord" alt="discord"></a></li>
+                    <img src="../assets/img/discord_logo.png" title="discord" alt="discord"></a></li>
             </ul>
         </nav>
     </header>
 
     <main class="converter-section">
         <p class="converter-title">link converter</p>
-        
+        <p class="converter-sub">taobao · weidian · 1688 · tmall · jd<br>pandabuy · usfans · mulebuy · acbuy · sugargoo · loongbuy → kakobuy</p>
 
         <form class="converter-form" id="converter-form">
             <div class="converter-input-wrap">
@@ -188,7 +185,6 @@
         </form>
 
         <div class="result-box" id="result-box">
-            <p class="result-link" id="result-link"></p>
             <div class="result-item">
                 <span class="result-link" id="result-display"></span>
                 <button class="copy-btn" id="copy-btn">copy</button>
@@ -213,7 +209,6 @@
             'jd.com',
         ];
 
-        // Agents that embed the original product URL in a query param
         const AGENT_EXTRACTORS = [
             { hosts: ['kakobuy.com'],  param: 'url' },
             { hosts: ['pandabuy.com'], param: 'url' },
@@ -234,10 +229,8 @@
 
             const host = parsed.hostname;
 
-            // Already a source site link
             if (SOURCE_SITES.some(s => matchesHost(host, s))) return raw;
 
-            // Agent with ?url= param
             for (const agent of AGENT_EXTRACTORS) {
                 if (agent.hosts.some(h => matchesHost(host, h))) {
                     const inner = parsed.searchParams.get(agent.param);
@@ -245,7 +238,6 @@
                 }
             }
 
-            // Sugargoo uses hash routing: #/home/productDetail?productLink=...
             if (matchesHost(host, 'sugargoo.com')) {
                 const match = parsed.hash.match(/productLink=([^&]+)/);
                 if (match) return decodeURIComponent(match[1]);
@@ -291,8 +283,7 @@
         });
 
         copyBtn.addEventListener('click', function () {
-            const text = resultDisplay.textContent;
-            navigator.clipboard.writeText(text).then(() => {
+            navigator.clipboard.writeText(resultDisplay.textContent).then(() => {
                 copyBtn.textContent = 'copied!';
                 copyBtn.classList.add('copied');
                 setTimeout(() => {
