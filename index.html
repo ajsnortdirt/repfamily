@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>rep.family</title>
+    <link rel="icon" href="assets/img/logo.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="index.html"><img src="assets/img/banner_no_bg.png" alt="rep.family"></a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">spreadsheet</a></li>
+                <li><a href="tracking.html">tracking</a></li>
+                <li><a href="converter.html">converter</a></li>
+                <li><a href="https://discord.gg/pMD3927PcZ" target="_blank">
+                    <img src="assets/img/discord_logo.png" title="discord" alt="discord"></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        <section class="controls">
+            <div class="ad-banner">
+                <a href="https://ikako.vip/r/repfamily" target="_blank">
+                    <img src="assets/img/ad.png" alt="ad">
+                </a>
+            </div>
+
+            <div class="categories" id="categories"></div>
+
+            <div class="toolbar">
+                <div class="search-wrap">
+                    <!-- <span class="search-icon">&#128269;</span> -->
+                    <input type="text" id="search" placeholder="search products...">
+                </div>
+                <div class="sort-wrap">
+                    <label for="sort">sort by:</label>
+                    <select id="sort">
+                        <option value="newest">newest</option>
+                        <option value="oldest">oldest</option>
+                        <option value="az">a–z</option>
+                        <option value="za">z–a</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <section class="content">
+            <div id="grid" class="grid"></div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 rep.family. all rights reserved.</p>
+        <p class="footer-disclaimer">rep.family does not sell any physical products. this site is a curated spreadsheet of links from taobao and weidian to help buyers find reliable listings. rep.family does not support or endorse the sale of counterfeit goods. educational purposes only.</p>
+    </footer>
+
+    <script src="data/products.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

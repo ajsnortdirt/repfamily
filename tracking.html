@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tracking — rep.family</title>
+    <link rel="icon" href="assets/img/logo.png">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .tracking-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 40px;
+            gap: 32px;
+        }
+
+        .tracking-title {
+            font-size: 1.4rem;
+            letter-spacing: 0.1em;
+            color: white;
+        }
+
+        .tracking-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            width: 100%;
+            max-width: 520px;
+        }
+
+        .tracking-input-wrap {
+            display: flex;
+            width: 100%;
+            background: #000;
+            border: 2px solid #888;
+            border-top-color: #444;
+            border-left-color: #444;
+            border-bottom-color: #ccc;
+            border-right-color: #ccc;
+            padding: 0 6px;
+        }
+
+        #tracking-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: white;
+            font-size: 1rem;
+            font-family: Arial, sans-serif;
+            padding: 12px 6px;
+        }
+
+        #tracking-input::placeholder {
+            color: #555;
+            font-style: italic;
+        }
+
+        .tracking-btn {
+            background: none;
+            border: 2px solid white;
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 1rem;
+            padding: 10px 40px;
+            cursor: pointer;
+            letter-spacing: 0.05em;
+            transition: background 0.15s, color 0.15s;
+        }
+
+        .tracking-btn:hover {
+            background: white;
+            color: black;
+        }
+
+        .tracking-hint {
+            font-size: 0.78rem;
+            color: #555;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .tracking-section {
+                padding: 40px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="index.html"><img src="assets/img/banner_no_bg.png" alt="rep.family"></a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">spreadsheet</a></li>
+                <li><a href="tracking.html">tracking</a></li>
+                <li><a href="converter.html">converter</a></li>
+                <li><a href="https://discord.gg/pMD3927PcZ" target="_blank">
+                    <img src="assets/img/discord_logo.png" title="discord" alt="discord"></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="tracking-section">
+        <p class="tracking-title">track your package</p>
+        <form class="tracking-form" id="tracking-form">
+            <div class="tracking-input-wrap">
+                <input
+                    type="text"
+                    id="tracking-input"
+                    placeholder="paste tracking number..."
+                    autocomplete="off"
+                    spellcheck="false"
+                >
+            </div>
+            <button type="submit" class="tracking-btn">track</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 rep.family. all rights reserved.</p>
+        <p class="footer-disclaimer">rep.family does not sell any physical products. this site is a curated spreadsheet of links from taobao and weidian to help buyers find reliable listings. rep.family does not support or endorse the sale of counterfeit goods. educational purposes only.</p>
+    </footer>
+
+    <script>
+        document.getElementById('tracking-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const num = document.getElementById('tracking-input').value.trim();
+            if (!num) return;
+            window.open('https://t.17track.net/en#nums=' + encodeURIComponent(num), '_blank');
+        });
+    </script>
+
+</body>
+</html>
