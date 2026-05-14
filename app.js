@@ -74,15 +74,28 @@
         card.target = '_blank';
         card.rel = 'noopener noreferrer';
         const pricePln = Math.round(p.price * usdToPln);
-        card.innerHTML = `
-            <div class="card-img">
-                <img src="${p.img}" alt="${p.name}" loading="lazy">
-            </div>
-            <div class="card-info">
-                <span class="card-name">${p.name}</span>
-                <span class="card-price">${pricePln} pln</span>
-            </div>
-        `;
+
+        const imgWrap = document.createElement('div');
+        imgWrap.className = 'card-img';
+        const img = document.createElement('img');
+        img.src = p.img;
+        img.alt = p.name;
+        img.loading = 'lazy';
+        imgWrap.appendChild(img);
+
+        const info = document.createElement('div');
+        info.className = 'card-info';
+        const nameSpan = document.createElement('span');
+        nameSpan.className = 'card-name';
+        nameSpan.textContent = p.name;
+        const priceSpan = document.createElement('span');
+        priceSpan.className = 'card-price';
+        priceSpan.textContent = pricePln + ' pln';
+        info.appendChild(nameSpan);
+        info.appendChild(priceSpan);
+
+        card.appendChild(imgWrap);
+        card.appendChild(info);
         return card;
     }
 
