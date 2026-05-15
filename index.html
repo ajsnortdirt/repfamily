@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-9A7946uNLpfGUbmmGUozjSbgZGJ2N1iIegyzCAUtLJ8='; style-src 'self'; img-src 'self'; connect-src 'self' https://api.frankfurter.app; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>rep.family</title>
     <meta name="description" content="rep.family is a curated spreadsheet of replica products from Taobao and Weidian. Balenciaga, Rick Owens, Chrome Hearts, ERD, Raf Simons and more. — with direct links and prices.">
     <meta name="robots" content="index, follow">
@@ -13,7 +15,7 @@
     <meta property="og:url" content="https://rep.family/">
     <meta property="og:title" content="rep.family — #1 Rep Spreadsheet">
     <meta property="og:description" content="Curated spreadsheet of replica products from Taobao and Weidian. Balenciaga, Rick Owens, Chrome Hearts, ERD, Raf Simons and more.">
-    <meta property="og:image" content="https://rep.family/assets/img/banner.png">
+    <meta property="og:image" content="https://rep.family/assets/img/banner.webp">
     <meta property="og:locale" content="en_US">
     <meta property="og:site_name" content="rep.family">
 
@@ -21,10 +23,15 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="rep.family — #1 Rep Spreadsheet">
     <meta name="twitter:description" content="Curated spreadsheet of replica products from Taobao and Weidian. Balenciaga, Rick Owens, Chrome Hearts, ERD, Raf Simons and more.">
-    <meta name="twitter:image" content="https://rep.family/assets/img/banner.png">
+    <meta name="twitter:image" content="https://rep.family/assets/img/banner.webp">
 
-    <link rel="icon" href="assets/img/logo.png">
+    <link rel="icon" href="assets/img/logo.webp">
     <link rel="stylesheet" href="style.css">
+    <link rel="preload" href="assets/img/banner_no_bg.webp" as="image" type="image/webp" fetchpriority="high">
+    <link rel="preload" href="assets/img/background.webp" as="image" type="image/webp">
+    <link rel="preload" href="data/products.js" as="script">
+    <link rel="preconnect" href="https://api.frankfurter.app" crossorigin>
+    <link rel="dns-prefetch" href="https://api.frankfurter.app">
 
     <!-- Structured data -->
     <script type="application/ld+json">
@@ -47,14 +54,14 @@
     <header>
         <nav>
             <div class="logo">
-                <a href="/"><img src="/assets/img/banner_no_bg.png" alt="rep.family"></a>
+                <a href="./"><img src="assets/img/banner_no_bg.webp" alt="rep.family" width="280" height="70" decoding="async" fetchpriority="high"></a>
             </div>
             <ul class="nav-links">
-                <li><a href="/">spreadsheet</a></li>
-                <li><a href="/tracking/">tracking</a></li>
-                <li><a href="/converter/">converter</a></li>
-                <li><a href="https://discord.gg/pMD3927PcZ" target="_blank">
-                    <img src="/assets/img/discord_logo.png" title="discord" alt="discord"></a></li>
+                <li><a href="./">spreadsheet</a></li>
+                <li><a href="tracking/">tracking</a></li>
+                <li><a href="converter/">converter</a></li>
+                <li><a href="https://discord.gg/pMD3927PcZ" target="_blank" rel="noopener noreferrer" aria-label="join our discord">
+                    <img src="assets/img/discord_logo.webp" title="discord" alt="" width="24" height="24" decoding="async"></a></li>
             </ul>
         </nav>
     </header>
@@ -63,32 +70,47 @@
 
         <section class="controls">
             <div class="ad-banner">
-                <a href="https://ikako.vip/r/repfamily" target="_blank">
-                    <img src="assets/img/ad.png" alt="ad">
+                <a href="https://ikako.vip/r/repfamily" target="_blank" rel="noopener">
+                    <img src="assets/img/ad.webp" alt="ad" loading="lazy" decoding="async" fetchpriority="low">
                 </a>
             </div>
 
-            <div class="categories" id="categories"></div>
+            <div class="categories" id="categories" role="group" aria-label="product categories"></div>
 
             <div class="toolbar">
                 <div class="search-wrap">
-                    <!-- <span class="search-icon">&#128269;</span> -->
-                    <input type="text" id="search" placeholder="search products...">
+                    <input type="search" id="search" placeholder="search products..." aria-label="search products" autocomplete="off" spellcheck="false">
+                    <button type="button" class="search-clear" id="search-clear" aria-label="clear search" hidden>&times;</button>
                 </div>
                 <div class="sort-wrap">
                     <label for="sort">sort by:</label>
-                    <select id="sort">
+                    <select id="sort" aria-label="sort products">
                         <option value="newest">newest</option>
                         <option value="oldest">oldest</option>
                         <option value="az">a–z</option>
                         <option value="za">z–a</option>
+                        <option value="price_asc">price: low to high</option>
+                        <option value="price_desc">price: high to low</option>
                     </select>
                 </div>
             </div>
         </section>
 
         <section class="content">
-            <div id="grid" class="grid"></div>
+            <div id="grid" class="grid" aria-live="polite" aria-busy="true">
+                <div class="skeleton-wrap" id="skeleton">
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                </div>
+            </div>
         </section>
 
     </main>
@@ -98,7 +120,7 @@
         <p class="footer-disclaimer">rep.family does not sell any physical products. this site is a curated spreadsheet of links from taobao and weidian to help buyers find reliable listings. rep.family does not support or endorse the sale of counterfeit goods. educational purposes only.</p>
     </footer>
 
-    <script src="data/products.js"></script>
-    <script src="app.js"></script>
+    <script src="data/products.js" defer></script>
+    <script src="app.js" defer></script>
 </body>
 </html>

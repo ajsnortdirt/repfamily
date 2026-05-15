@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>link converter — rep.family</title>
     <meta name="description" content="Convert links to KakoBuy in one click. Free tool by rep.family.">
     <meta name="robots" content="index, follow">
@@ -13,173 +15,35 @@
     <meta property="og:url" content="https://rep.family/converter/">
     <meta property="og:title" content="link converter — rep.family">
     <meta property="og:description" content="Convert links to KakoBuy in one click.">
-    <meta property="og:image" content="https://rep.family/assets/img/banner.png">
+    <meta property="og:image" content="https://rep.family/assets/img/banner.webp">
     <meta property="og:site_name" content="rep.family">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="link converter — rep.family">
     <meta name="twitter:description" content="Convert links to KakoBuy in one click.">
-    <meta name="twitter:image" content="https://rep.family/assets/img/banner.png">
+    <meta name="twitter:image" content="https://rep.family/assets/img/banner.webp">
 
-    <link rel="icon" href="../assets/img/logo.png">
+    <link rel="icon" href="../assets/img/logo.webp">
+    <link rel="preload" href="../assets/img/banner_no_bg.webp" as="image" type="image/webp" fetchpriority="high">
+    <link rel="preload" href="../assets/img/background.webp" as="image" type="image/webp">
     <link rel="stylesheet" href="../style.css">
-    <style>
-        .converter-section {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 60px 40px;
-            gap: 28px;
-        }
-
-        .converter-title {
-            font-size: 1.4rem;
-            letter-spacing: 0.1em;
-            color: white;
-        }
-
-        .converter-sub {
-            font-size: 0.85rem;
-            color: #666;
-            text-align: center;
-            line-height: 1.6;
-        }
-
-        .converter-form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
-            width: 100%;
-            max-width: 620px;
-        }
-
-        .converter-input-wrap {
-            display: flex;
-            width: 100%;
-            background: #000;
-            border: 2px solid #888;
-            border-top-color: #444;
-            border-left-color: #444;
-            border-bottom-color: #ccc;
-            border-right-color: #ccc;
-            padding: 0 6px;
-        }
-
-        #converter-input {
-            flex: 1;
-            background: transparent;
-            border: none;
-            outline: none;
-            color: white;
-            font-size: 0.95rem;
-            font-family: Arial, sans-serif;
-            padding: 12px 6px;
-        }
-
-        #converter-input::placeholder {
-            color: #555;
-            font-style: italic;
-        }
-
-        .converter-btn {
-            background: none;
-            border: 2px solid white;
-            color: white;
-            font-family: Arial, sans-serif;
-            font-size: 1rem;
-            padding: 10px 40px;
-            cursor: pointer;
-            letter-spacing: 0.05em;
-            transition: background 0.15s, color 0.15s;
-        }
-
-        .converter-btn:hover {
-            background: white;
-            color: black;
-        }
-
-        .result-box {
-            display: none;
-            flex-direction: column;
-            gap: 12px;
-            width: 100%;
-            max-width: 620px;
-        }
-
-        .result-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: #000;
-            border: 2px solid #888;
-            border-top-color: #444;
-            border-left-color: #444;
-            border-bottom-color: #ccc;
-            border-right-color: #ccc;
-            padding: 0 6px;
-        }
-
-        .result-link {
-            flex: 1;
-            color: white;
-            font-size: 0.82rem;
-            font-family: Arial, sans-serif;
-            padding: 10px 6px;
-            word-break: break-all;
-            white-space: normal;
-        }
-
-        .copy-btn {
-            background: none;
-            border: none;
-            color: #aaa;
-            font-family: Arial, sans-serif;
-            font-size: 0.8rem;
-            cursor: pointer;
-            white-space: nowrap;
-            padding: 8px 4px;
-            transition: color 0.15s;
-            flex-shrink: 0;
-        }
-
-        .copy-btn:hover {
-            color: white;
-        }
-
-        .copy-btn.copied {
-            color: #4caf50;
-        }
-
-        .error-msg {
-            color: #c0392b;
-            font-size: 0.85rem;
-            display: none;
-        }
-
-        @media (max-width: 768px) {
-            .converter-section {
-                padding: 40px 16px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="converter.css">
+    <script src="converter.js" defer></script>
 </head>
 <body>
 
     <header>
         <nav>
             <div class="logo">
-                <a href="../"><img src="../assets/img/banner_no_bg.png" alt="rep.family"></a>
+                <a href="../"><img src="../assets/img/banner_no_bg.webp" alt="rep.family" width="280" height="70" decoding="async" fetchpriority="high"></a>
             </div>
             <ul class="nav-links">
                 <li><a href="../">spreadsheet</a></li>
                 <li><a href="../tracking/">tracking</a></li>
                 <li><a href="../converter/">converter</a></li>
-                <li><a href="https://discord.gg/pMD3927PcZ" target="_blank">
-                    <img src="../assets/img/discord_logo.png" title="discord" alt="discord"></a></li>
+                <li><a href="https://discord.gg/pMD3927PcZ" target="_blank" rel="noopener noreferrer">
+                    <img src="../assets/img/discord_logo.webp" title="discord" alt="discord" width="24" height="24" decoding="async"></a></li>
             </ul>
         </nav>
     </header>
@@ -195,7 +59,9 @@
                     placeholder="paste product link..."
                     autocomplete="off"
                     spellcheck="false"
+                    aria-label="product link"
                 >
+                <button type="button" class="input-clear" id="converter-clear" aria-label="clear input" hidden>&times;</button>
             </div>
             <p class="error-msg" id="error-msg">unrecognized link</p>
             <button type="submit" class="converter-btn">convert</button>
@@ -206,7 +72,7 @@
                 <span class="result-link" id="result-display"></span>
                 <button class="copy-btn" id="copy-btn">copy</button>
             </div>
-            <a id="open-link" target="_blank" style="font-size:0.8rem; color:#888; text-align:center;">open in kakobuy ↗</a>
+            <a id="open-link" class="open-link" target="_blank" rel="noopener noreferrer">open in kakobuy &#8599;</a>
         </div>
     </main>
 
@@ -214,102 +80,6 @@
         <p>&copy; 2026 rep.family. all rights reserved.</p>
         <p class="footer-disclaimer">rep.family does not sell any physical products. this site is a curated spreadsheet of links from taobao and weidian to help buyers find reliable listings. rep.family does not support or endorse the sale of counterfeit goods. educational purposes only.</p>
     </footer>
-
-    <script>
-        const AFFCODE = 'repfamily';
-
-        const SOURCE_SITES = [
-            'taobao.com',
-            'weidian.com',
-            '1688.com',
-            'tmall.com',
-            'jd.com',
-        ];
-
-        const AGENT_EXTRACTORS = [
-            { hosts: ['kakobuy.com'],  param: 'url' },
-            { hosts: ['pandabuy.com'], param: 'url' },
-            { hosts: ['usfans.com'],   param: 'url' },
-            { hosts: ['mulebuy.com'],  param: 'url' },
-            { hosts: ['acbuy.com'],    param: 'url' },
-            { hosts: ['loongbuy.com'], param: 'url' },
-            { hosts: ['cssbuy.com'],   param: 'url' },
-        ];
-
-        function matchesHost(hostname, domain) {
-            return hostname === domain || hostname.endsWith('.' + domain);
-        }
-
-        function extractProductUrl(raw) {
-            let parsed;
-            try { parsed = new URL(raw); } catch { return null; }
-
-            const host = parsed.hostname;
-
-            if (SOURCE_SITES.some(s => matchesHost(host, s))) return raw;
-
-            for (const agent of AGENT_EXTRACTORS) {
-                if (agent.hosts.some(h => matchesHost(host, h))) {
-                    const inner = parsed.searchParams.get(agent.param);
-                    if (inner) return inner;
-                }
-            }
-
-            if (matchesHost(host, 'sugargoo.com')) {
-                const match = parsed.hash.match(/productLink=([^&]+)/);
-                if (match) return decodeURIComponent(match[1]);
-            }
-
-            return null;
-        }
-
-        function buildKakoBuyLink(url) {
-            return 'https://www.kakobuy.com/item/details?url=' + encodeURIComponent(url) + '&affcode=' + AFFCODE;
-        }
-
-        const form = document.getElementById('converter-form');
-        const input = document.getElementById('converter-input');
-        const resultBox = document.getElementById('result-box');
-        const resultDisplay = document.getElementById('result-display');
-        const openLink = document.getElementById('open-link');
-        const copyBtn = document.getElementById('copy-btn');
-        const errorMsg = document.getElementById('error-msg');
-
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
-            const raw = input.value.trim();
-
-            errorMsg.style.display = 'none';
-            resultBox.style.display = 'none';
-
-            if (!raw) return;
-
-            const productUrl = extractProductUrl(raw);
-            if (!productUrl) {
-                errorMsg.style.display = 'block';
-                return;
-            }
-
-            const converted = buildKakoBuyLink(productUrl);
-            resultDisplay.textContent = converted;
-            openLink.href = converted;
-            resultBox.style.display = 'flex';
-            copyBtn.textContent = 'copy';
-            copyBtn.classList.remove('copied');
-            window.open(converted, '_blank');
-        });
-
-        copyBtn.addEventListener('click', function () {
-            navigator.clipboard.writeText(resultDisplay.textContent).then(() => {
-                copyBtn.textContent = 'copied!';
-                copyBtn.classList.add('copied');
-                setTimeout(() => {
-                    copyBtn.textContent = 'copy';
-                    copyBtn.classList.remove('copied');
-                }, 2000);
-            });
-        });
-    </script>
 
 </body>
 </html>

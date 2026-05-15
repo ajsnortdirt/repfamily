@@ -1,0 +1,146 @@
+.converter-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 40px;
+    gap: 28px;
+}
+
+.converter-title {
+    font-size: 1.4rem;
+    letter-spacing: 0.1em;
+    color: white;
+}
+
+.converter-sub {
+    font-size: 0.85rem;
+    color: #666;
+    text-align: center;
+    line-height: 1.6;
+}
+
+.converter-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    max-width: 620px;
+}
+
+.converter-input-wrap {
+    display: flex;
+    width: 100%;
+    background: #000;
+    border: 2px solid #888;
+    border-top-color: #444;
+    border-left-color: #444;
+    border-bottom-color: #ccc;
+    border-right-color: #ccc;
+    padding: 0 6px;
+}
+
+#converter-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 0.95rem;
+    font-family: Arial, sans-serif;
+    padding: 12px 6px;
+}
+
+#converter-input::placeholder {
+    color: #555;
+    font-style: italic;
+}
+
+.converter-btn {
+    background: none;
+    border: 2px solid white;
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 1rem;
+    padding: 10px 40px;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: background 0.15s, color 0.15s;
+}
+
+.converter-btn:hover {
+    background: white;
+    color: black;
+}
+
+.result-box {
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: 620px;
+}
+
+.result-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #000;
+    border: 2px solid #888;
+    border-top-color: #444;
+    border-left-color: #444;
+    border-bottom-color: #ccc;
+    border-right-color: #ccc;
+    padding: 0 6px;
+}
+
+.result-link {
+    flex: 1;
+    color: white;
+    font-size: 0.82rem;
+    font-family: Arial, sans-serif;
+    padding: 10px 6px;
+    word-break: break-all;
+    white-space: normal;
+}
+
+.copy-btn {
+    background: none;
+    border: none;
+    color: #aaa;
+    font-family: Arial, sans-serif;
+    font-size: 0.8rem;
+    cursor: pointer;
+    white-space: nowrap;
+    padding: 8px 4px;
+    transition: color 0.15s;
+    flex-shrink: 0;
+}
+
+.copy-btn:hover {
+    color: white;
+}
+
+.copy-btn.copied {
+    color: #4caf50;
+}
+
+.error-msg {
+    color: #c0392b;
+    font-size: 0.85rem;
+    display: none;
+}
+
+.open-link {
+    font-size: 0.8rem;
+    color: #888;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .converter-section {
+        padding: 40px 16px;
+    }
+}

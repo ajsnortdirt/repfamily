@@ -1,4 +1,6 @@
 (function () {
+    'use strict';
+
     const products = window.PRODUCTS || [];
 
     // =========================================================
@@ -9,18 +11,24 @@
     // Żeby ukryć kategorię: usuń lub zakomentuj linię (//)
     // =========================================================
     const CATEGORY_LABELS = {
-        all:        'all',
-        footwear:   'footwear',
-        hoodies:    'hoodies',
-        tops:       'tops',
-        bottoms:    'bottoms',
-        outerwear:  'outerwear',
-        jewelry:    'jewelry',
-        misc:       'other',
+        all:          'all',
+        shoes:        'shoes',
+        hoodies:      'hoodies',
+        tshirts:      't-shirts',
+        pants:        'pants',
+        shorts:       'shorts',
+        jackets:      'jackets',
+        sets:         'sets',
+        accessories:  'accessories',
+        electronics:  'electronics',
+        watches:      'watches',
     };
     // =========================================================
 
     const PAGE_SIZE = 20;
+    const SEARCH_DEBOUNCE_MS = 150;
+    const FX_CACHE_KEY = 'usd_pln_rate_v1';
+    const FX_CACHE_TTL_MS = 6 * 60 * 60 * 1000;
 
     let usdToPln = 4.0;
     let activeCategory = 'all';
@@ -29,43 +37,138 @@
     let filteredList = [];
     let loadedCount = 0;
     let observer = null;
+    let searchTimer = 0;
+    let renderToken = 0;
+    let lastRenderKey = '';
+    let searchIndexBuilt = false;
 
-    // --- Categories ---
+    const len = products.length;
 
-    const existingCats = Object.keys(CATEGORY_LABELS).filter(
-        cat => cat === 'all' || products.some(p => p.cat === cat)
-    );
+    function buildSearchIndex() {
+        if (searchIndexBuilt) return;
+        for (let i = 0; i < len; i++) {
+            const p = products[i];
+            p._search = (p.name + ' ' + (p.brand || '')).toLowerCase();
+        }
+        searchIndexBuilt = true;
+    }
+
+    const grid = document.getElementById('grid');
     const categoriesEl = document.getElementById('categories');
+    const searchEl = document.getElementById('search');
+    const sortEl = document.getElementById('sort');
+    const searchClearBtn = document.getElementById('search-clear');
+    const controlsTop = document.querySelector('.controls');
 
-    existingCats.forEach(cat => {
+    const existingCatSet = new Set();
+    for (let i = 0; i < len; i++) existingCatSet.add(products[i].cat);
+
+    const catFragment = document.createDocumentFragment();
+    Object.keys(CATEGORY_LABELS).forEach(cat => {
+        if (cat !== 'all' && !existingCatSet.has(cat)) return;
         const btn = document.createElement('button');
-        btn.className = 'cat-btn' + (cat === 'all' ? ' active' : '');
+        const isActive = cat === 'all';
+        btn.type = 'button';
+        btn.className = 'cat-btn' + (isActive ? ' active' : '');
         btn.textContent = CATEGORY_LABELS[cat];
         btn.dataset.cat = cat;
-        btn.addEventListener('click', () => {
-            activeCategory = cat;
-            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            render();
-        });
-        categoriesEl.appendChild(btn);
+        btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        catFragment.appendChild(btn);
     });
+    categoriesEl.appendChild(catFragment);
 
-    // --- Search ---
+    function scrollToContent() {
+        if (window.scrollY > 100 && grid.getBoundingClientRect().top < 0) {
+            window.scrollTo({ top: controlsTop ? controlsTop.offsetTop - 8 : 0, behavior: 'smooth' });
+        }
+    }
 
-    document.getElementById('search').addEventListener('input', e => {
-        searchQuery = e.target.value.toLowerCase();
+    function setActiveCategory(cat) {
+        if (cat === activeCategory) return;
+        activeCategory = cat;
+        const buttons = categoriesEl.children;
+        for (let i = 0; i < buttons.length; i++) {
+            const b = buttons[i];
+            const isActive = b.dataset.cat === cat;
+            b.classList.toggle('active', isActive);
+            b.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        }
         render();
+        scrollToContent();
+    }
+
+    categoriesEl.addEventListener('click', e => {
+        const btn = e.target.closest('.cat-btn');
+        if (!btn || !categoriesEl.contains(btn)) return;
+        setActiveCategory(btn.dataset.cat);
     });
 
-    // --- Sort ---
+    function updateClearVisibility() {
+        if (searchEl.value) {
+            searchClearBtn.removeAttribute('hidden');
+        } else {
+            searchClearBtn.setAttribute('hidden', '');
+        }
+    }
 
-    document.getElementById('sort').addEventListener('change', e => {
+    searchEl.addEventListener('input', e => {
+        const q = e.target.value.toLowerCase();
+        updateClearVisibility();
+        if (q === searchQuery) return;
+        if (searchTimer) clearTimeout(searchTimer);
+        searchTimer = setTimeout(() => {
+            searchQuery = q;
+            render();
+        }, SEARCH_DEBOUNCE_MS);
+    });
+
+    searchEl.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && searchEl.value) {
+            e.preventDefault();
+            clearSearch();
+        }
+    });
+
+    function clearSearch() {
+        searchEl.value = '';
+        searchQuery = '';
+        updateClearVisibility();
+        if (searchTimer) { clearTimeout(searchTimer); searchTimer = 0; }
+        render();
+        searchEl.focus();
+    }
+
+    searchClearBtn.addEventListener('click', clearSearch);
+
+    document.addEventListener('keydown', e => {
+        if (e.key === '/' && document.activeElement !== searchEl && !e.ctrlKey && !e.metaKey && !e.altKey) {
+            e.preventDefault();
+            searchEl.focus();
+        }
+    });
+
+    sortEl.addEventListener('change', e => {
         sortMode = e.target.value;
         render();
+        scrollToContent();
     });
 
-    // --- Card factory ---
+    function resetFilters() {
+        searchEl.value = '';
+        searchQuery = '';
+        updateClearVisibility();
+        sortEl.value = 'newest';
+        sortMode = 'newest';
+        activeCategory = 'all';
+        const buttons = categoriesEl.children;
+        for (let i = 0; i < buttons.length; i++) {
+            const b = buttons[i];
+            const isAll = b.dataset.cat === 'all';
+            b.classList.toggle('active', isAll);
+            b.setAttribute('aria-pressed', isAll ? 'true' : 'false');
+        }
+        render();
+    }
 
     function createCard(p) {
         const card = document.createElement('a');
@@ -73,7 +176,6 @@
         card.href = p.url || '#';
         card.target = '_blank';
         card.rel = 'noopener noreferrer';
-        const pricePln = Math.round(p.price * usdToPln);
 
         const imgWrap = document.createElement('div');
         imgWrap.className = 'card-img';
@@ -81,6 +183,9 @@
         img.src = p.img;
         img.alt = p.name;
         img.loading = 'lazy';
+        img.decoding = 'async';
+        img.width = 300;
+        img.height = 300;
         imgWrap.appendChild(img);
 
         const info = document.createElement('div');
@@ -90,7 +195,7 @@
         nameSpan.textContent = p.name;
         const priceSpan = document.createElement('span');
         priceSpan.className = 'card-price';
-        priceSpan.textContent = pricePln + ' pln';
+        priceSpan.textContent = Math.round(p.price * usdToPln) + ' pln';
         info.appendChild(nameSpan);
         info.appendChild(priceSpan);
 
@@ -99,75 +204,142 @@
         return card;
     }
 
-    // --- Load next batch ---
-
     function loadMore() {
-        const grid = document.getElementById('grid');
-        const batch = filteredList.slice(loadedCount, loadedCount + PAGE_SIZE);
-        batch.forEach(p => grid.appendChild(createCard(p)));
-        loadedCount += batch.length;
+        const end = Math.min(loadedCount + PAGE_SIZE, filteredList.length);
+        const fragment = document.createDocumentFragment();
+        for (let i = loadedCount; i < end; i++) {
+            fragment.appendChild(createCard(filteredList[i]));
+        }
+        grid.appendChild(fragment);
+        loadedCount = end;
 
         if (loadedCount >= filteredList.length) {
-            if (observer) observer.disconnect();
+            if (observer) { observer.disconnect(); observer = null; }
             const sentinel = document.getElementById('sentinel');
             if (sentinel) sentinel.remove();
         }
     }
 
-    // --- Render (reset + first batch) ---
+    function filterProducts() {
+        const hasSearch = searchQuery.length > 0;
+        const hasCat = activeCategory !== 'all';
+        if (!hasSearch && !hasCat) return products.slice();
+
+        if (hasSearch) buildSearchIndex();
+
+        const out = [];
+        for (let i = 0; i < len; i++) {
+            const p = products[i];
+            if (hasCat && p.cat !== activeCategory) continue;
+            if (hasSearch && p._search.indexOf(searchQuery) === -1) continue;
+            out.push(p);
+        }
+        return out;
+    }
+
+    function sortInPlace(arr) {
+        switch (sortMode) {
+            case 'newest':     arr.sort((a, b) => b.id - a.id); break;
+            case 'oldest':     arr.sort((a, b) => a.id - b.id); break;
+            case 'az':         arr.sort((a, b) => a.name.localeCompare(b.name)); break;
+            case 'za':         arr.sort((a, b) => b.name.localeCompare(a.name)); break;
+            case 'price_asc':  arr.sort((a, b) => a.price - b.price); break;
+            case 'price_desc': arr.sort((a, b) => b.price - a.price); break;
+        }
+    }
 
     function render() {
-        filteredList = products.filter(p => {
-            const matchCat = activeCategory === 'all' || p.cat === activeCategory;
-            const matchSearch = !searchQuery ||
-                p.name.toLowerCase().includes(searchQuery) ||
-                (p.brand && p.brand.toLowerCase().includes(searchQuery));
-            return matchCat && matchSearch;
-        });
+        const renderKey = activeCategory + '|' + searchQuery + '|' + sortMode;
+        if (renderKey === lastRenderKey && filteredList.length > 0 && grid.firstChild && !grid.querySelector('.skeleton-card')) {
+            return;
+        }
+        lastRenderKey = renderKey;
 
-        if (sortMode === 'newest') filteredList.sort((a, b) => b.id - a.id);
-        else if (sortMode === 'oldest') filteredList.sort((a, b) => a.id - b.id);
-        else if (sortMode === 'az') filteredList.sort((a, b) => a.name.localeCompare(b.name));
-        else if (sortMode === 'za') filteredList.sort((a, b) => b.name.localeCompare(a.name));
+        const token = ++renderToken;
 
-        const grid = document.getElementById('grid');
-        grid.innerHTML = '';
+        filteredList = filterProducts();
+        sortInPlace(filteredList);
+
+        if (observer) { observer.disconnect(); observer = null; }
+        const oldSentinel = document.getElementById('sentinel');
+        if (oldSentinel) oldSentinel.remove();
+
+        grid.textContent = '';
+        grid.setAttribute('aria-busy', 'false');
         loadedCount = 0;
 
         if (filteredList.length === 0) {
-            grid.innerHTML = '<p class="no-results">No products found.</p>';
+            const wrap = document.createElement('div');
+            wrap.className = 'no-results';
+            const msg = document.createElement('p');
+            msg.textContent = 'No products found.';
+            wrap.appendChild(msg);
+            const hasActiveFilter = searchQuery.length > 0 || activeCategory !== 'all';
+            if (hasActiveFilter) {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'no-results-reset';
+                btn.textContent = 'reset filters';
+                btn.addEventListener('click', resetFilters);
+                wrap.appendChild(btn);
+            }
+            grid.appendChild(wrap);
             return;
         }
 
         loadMore();
 
-        if (loadedCount < filteredList.length) {
-            if (observer) observer.disconnect();
+        if (token !== renderToken) return;
 
-            let sentinel = document.getElementById('sentinel');
-            if (!sentinel) {
-                sentinel = document.createElement('div');
-                sentinel.id = 'sentinel';
-                grid.parentElement.appendChild(sentinel);
-            }
+        if (loadedCount < filteredList.length) {
+            const sentinel = document.createElement('div');
+            sentinel.id = 'sentinel';
+            grid.parentElement.appendChild(sentinel);
 
             observer = new IntersectionObserver(entries => {
                 if (entries[0].isIntersecting) loadMore();
-            }, { rootMargin: '200px' });
-
+            }, { rootMargin: '600px' });
             observer.observe(sentinel);
         }
     }
 
-    fetch('https://api.frankfurter.app/latest?from=USD&to=PLN')
-        .then(r => r.json())
-        .then(data => {
-            if (data.rates && data.rates.PLN) {
-                usdToPln = data.rates.PLN;
-                render();
-            } else {
-                render();
+    function updatePrices() {
+        const priceEls = grid.querySelectorAll('.card-price');
+        const n = Math.min(priceEls.length, filteredList.length);
+        for (let i = 0; i < n; i++) {
+            priceEls[i].textContent = Math.round(filteredList[i].price * usdToPln) + ' pln';
+        }
+    }
+
+    try {
+        const cached = localStorage.getItem(FX_CACHE_KEY);
+        if (cached) {
+            const parsed = JSON.parse(cached);
+            if (parsed && parsed.rate && (Date.now() - parsed.ts) < FX_CACHE_TTL_MS) {
+                usdToPln = parsed.rate;
             }
-        })
-        .catch(() => render());
+        }
+    } catch (_) {}
+
+    render();
+
+    const idle = window.requestIdleCallback || function (cb) { return setTimeout(cb, 200); };
+
+    idle(buildSearchIndex);
+
+    idle(function () {
+        fetch('https://api.frankfurter.app/latest?from=USD&to=PLN')
+            .then(r => r.json())
+            .then(data => {
+                if (data && data.rates && data.rates.PLN) {
+                    const rate = data.rates.PLN;
+                    try { localStorage.setItem(FX_CACHE_KEY, JSON.stringify({ rate, ts: Date.now() })); } catch (_) {}
+                    if (rate !== usdToPln) {
+                        usdToPln = rate;
+                        updatePrices();
+                    }
+                }
+            })
+            .catch(() => {});
+    });
 })();

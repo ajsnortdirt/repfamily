@@ -1,0 +1,75 @@
+.tracking-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 40px;
+    gap: 32px;
+}
+
+.tracking-title {
+    font-size: 1.4rem;
+    letter-spacing: 0.1em;
+    color: white;
+}
+
+.tracking-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    max-width: 520px;
+}
+
+.tracking-input-wrap {
+    display: flex;
+    width: 100%;
+    background: #000;
+    border: 2px solid #888;
+    border-top-color: #444;
+    border-left-color: #444;
+    border-bottom-color: #ccc;
+    border-right-color: #ccc;
+    padding: 0 6px;
+}
+
+#tracking-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 1rem;
+    font-family: Arial, sans-serif;
+    padding: 12px 6px;
+}
+
+#tracking-input::placeholder {
+    color: #555;
+    font-style: italic;
+}
+
+.tracking-btn {
+    background: none;
+    border: 2px solid white;
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 1rem;
+    padding: 10px 40px;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: background 0.15s, color 0.15s;
+}
+
+.tracking-btn:hover {
+    background: white;
+    color: black;
+}
+
+@media (max-width: 768px) {
+    .tracking-section {
+        padding: 40px 16px;
+    }
+}

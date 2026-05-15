@@ -1,67 +1,30 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>404 — rep.family</title>
-    <link rel="icon" href="/assets/img/logo.png">
+    <link rel="icon" href="/assets/img/logo.webp">
+    <link rel="preload" href="/assets/img/banner_no_bg.webp" as="image" type="image/webp" fetchpriority="high">
+    <link rel="preload" href="/assets/img/background.webp" as="image" type="image/webp">
     <link rel="stylesheet" href="/style.css">
-    <style>
-        .notfound-section {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        .notfound-code {
-            font-size: 6rem;
-            font-weight: bold;
-            color: white;
-            letter-spacing: 0.05em;
-        }
-
-        .notfound-msg {
-            font-size: 1.1rem;
-            color: #666;
-            letter-spacing: 0.1em;
-        }
-
-        .notfound-back {
-            margin-top: 12px;
-            background: none;
-            border: 2px solid white;
-            color: white;
-            font-family: Arial, sans-serif;
-            font-size: 0.95rem;
-            padding: 10px 36px;
-            cursor: pointer;
-            text-decoration: none;
-            letter-spacing: 0.05em;
-            transition: background 0.15s, color 0.15s;
-        }
-
-        .notfound-back:hover {
-            background: white;
-            color: black;
-        }
-    </style>
+    <link rel="stylesheet" href="/404.css">
 </head>
 <body>
 
     <header>
         <nav>
             <div class="logo">
-                <a href="/"><img src="/assets/img/banner_no_bg.png" alt="rep.family"></a>
+                <a href="/"><img src="/assets/img/banner_no_bg.webp" alt="rep.family" width="280" height="70" decoding="async" fetchpriority="high"></a>
             </div>
             <ul class="nav-links">
                 <li><a href="/">spreadsheet</a></li>
                 <li><a href="/tracking/">tracking</a></li>
                 <li><a href="/converter/">converter</a></li>
-                <li><a href="https://discord.gg/pMD3927PcZ" target="_blank">
-                    <img src="/assets/img/discord_logo.png" title="discord" alt="discord"></a></li>
+                <li><a href="https://discord.gg/pMD3927PcZ" target="_blank" rel="noopener noreferrer">
+                    <img src="/assets/img/discord_logo.webp" title="discord" alt="discord" width="24" height="24" decoding="async"></a></li>
             </ul>
         </nav>
     </header>
