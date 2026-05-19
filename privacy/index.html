@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self'; connect-src 'self' https://cloudflareinsights.com; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <title>privacy policy — rep.family</title>
+    <meta name="description" content="Polityka prywatności rep.family — jakie dane zbieramy i jak je chronimy.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://rep.family/privacy/">
+
+    <link rel="icon" href="/assets/img/logo.webp">
+    <link rel="preload" href="/assets/img/banner_no_bg.webp" as="image" type="image/webp" fetchpriority="high">
+    <link rel="preload" href="/assets/img/background.webp" as="image" type="image/webp">
+    <style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif;color:#fff}html{scroll-behavior:smooth;background:#000 url('/assets/img/background.webp') center top/cover no-repeat fixed}body{max-width:1600px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;background:#000;overflow-x:hidden}header{position:sticky;top:0;z-index:100;background:#fff}nav{padding:0 40px;height:90px;display:flex;align-items:center;justify-content:space-between}.logo img{height:70px}.nav-links{list-style:none;display:flex;align-items:center;gap:48px;font-size:1.3rem}.nav-links a{color:#000}.nav-links a img{height:1.3rem;display:block}main{flex:1}@media (max-width:768px){html{background-attachment:scroll}nav{flex-direction:column;height:auto;padding:16px 20px;gap:10px}.nav-links{flex-wrap:wrap;justify-content:center;gap:20px;font-size:1rem}}</style>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        .privacy-section{flex:1;max-width:860px;width:100%;margin:0 auto;padding:60px 40px;line-height:1.7}
+        .privacy-title{font-size:1.8rem;letter-spacing:0.05em;color:#fff;margin-bottom:8px}
+        .privacy-updated{font-size:0.85rem;color:#888;margin-bottom:32px}
+        .privacy-section h2{font-size:1.15rem;color:#fff;margin-top:32px;margin-bottom:12px;letter-spacing:0.03em}
+        .privacy-section p{font-size:0.95rem;color:#ccc;margin-bottom:14px}
+        .privacy-section ul{margin:8px 0 14px 24px;color:#ccc;font-size:0.95rem}
+        .privacy-section li{margin-bottom:6px}
+        .privacy-section a{color:#fff;text-decoration:underline}
+        .privacy-section a:hover{text-decoration:none}
+        @media (max-width:768px){.privacy-section{padding:40px 16px}}
+    </style>
+    <script src="/register-sw.js" defer></script>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="/"><img src="/assets/img/banner_no_bg.webp" alt="rep.family" width="280" height="70" decoding="async" fetchpriority="high"></a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/">spreadsheet</a></li>
+                <li><a href="/tracking/">tracking</a></li>
+                <li><a href="/converter/">converter</a></li>
+                <li><a href="https://discord.gg/pMD3927PcZ" target="_blank" rel="noopener noreferrer">
+                    <img src="/assets/img/discord_logo.webp" title="discord" alt="discord" width="24" height="24" decoding="async"></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="privacy-section">
+        <p class="privacy-title">polityka prywatności</p>
+        <p class="privacy-updated">Ostatnia aktualizacja: 19 maja 2026</p>
+
+        <p>rep.family ("strona") szanuje prywatność użytkowników. Niniejsza polityka wyjaśnia jakie dane są zbierane podczas korzystania ze strony oraz w jaki sposób są przetwarzane.</p>
+
+        <h2>1. Jakie dane zbieramy</h2>
+        <p><strong>Cloudflare Web Analytics</strong> — strona używa anonimowej analityki Cloudflare, która zbiera ogólne dane techniczne o wizytach: kraj, typ urządzenia, przeglądarka, ścieżka URL, czas wczytania strony. Dane są agregowane, bez identyfikatorów osobowych. Brak plików cookie.</p>
+        <p><strong>localStorage</strong> — w przeglądarce użytkownika zapisywany jest zachowany kurs USD/PLN (cache 6h), aby nie odpytywać zewnętrznego API przy każdym wejściu. Można wyczyścić przez "wyczyść dane przeglądarki".</p>
+        <p><strong>Service Worker / Cache</strong> — pliki strony (HTML, CSS, JS, obrazki) są lokalnie buforowane przez przeglądarkę, dzięki czemu strona działa szybciej i offline. Cache można wyczyścić w ustawieniach przeglądarki.</p>
+
+        <h2>2. Czego NIE zbieramy</h2>
+        <ul>
+            <li>Adresów IP (Cloudflare przetwarza je technicznie do dostarczania strony, ale nie są przechowywane przez rep.family)</li>
+            <li>Adresów email</li>
+            <li>Imion, nazwisk, danych adresowych</li>
+            <li>Danych płatniczych — strona nie sprzedaje żadnych produktów, jest jedynie zbiorem linków</li>
+            <li>Plików cookie służących do śledzenia</li>
+        </ul>
+
+        <h2>3. Linki zewnętrzne</h2>
+        <p>Strona zawiera linki do zewnętrznych serwisów, w szczególności KakoBuy z parametrem partnerskim <code>affcode=repfamily</code>. Po kliknięciu opuszczasz rep.family i podlegasz polityce prywatności:</p>
+        <ul>
+            <li>KakoBuy oraz serwisów źródłowych (Taobao, Weidian, 1688, Tmall, JD, Goofish)</li>
+            <li>Discord — w przypadku kliknięcia ikony Discord</li>
+            <li>17track.net — w przypadku korzystania z modułu śledzenia paczek</li>
+        </ul>
+        <p>rep.family nie ponosi odpowiedzialności za sposób przetwarzania danych przez te zewnętrzne podmioty.</p>
+
+        <h2>4. Cloudflare</h2>
+        <p>Strona jest dostarczana przez sieć Cloudflare, która może przechowywać logi techniczne (anonimowe) w celu zapewnienia bezpieczeństwa i wydajności. Szczegółowa polityka Cloudflare: <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer">cloudflare.com/privacypolicy</a>.</p>
+
+        <h2>5. Hosting</h2>
+        <p>Strona hostowana jest na infrastrukturze GitHub Pages. GitHub Inc. może zbierać dane techniczne zgodnie ze swoją polityką: <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener noreferrer">GitHub Privacy Statement</a>.</p>
+
+        <h2>6. Twoje prawa (RODO)</h2>
+        <p>Jeśli przebywasz na terenie Unii Europejskiej, masz prawo do informacji o przetwarzaniu danych osobowych. Ponieważ rep.family nie zbiera samodzielnie danych osobowych w rozumieniu RODO, nie przechowuje żadnych danych, które można by usunąć lub udostępnić.</p>
+        <p>W zakresie danych technicznych przetwarzanych przez Cloudflare i GitHub — prawa użytkownika reguluje polityka tych usługodawców.</p>
+
+        <h2>7. Kontakt</h2>
+        <p>W sprawach związanych z prywatnością — kontakt przez nasz <a href="https://discord.gg/pMD3927PcZ" target="_blank" rel="noopener noreferrer">serwer Discord</a>.</p>
+
+        <h2>8. Zmiany w polityce</h2>
+        <p>Polityka może być aktualizowana w razie zmian w działaniu strony lub przepisów prawa. Aktualna wersja zawsze dostępna pod adresem <a href="/privacy/">rep.family/privacy</a>.</p>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 rep.family. all rights reserved. <a href="/privacy/">privacy policy</a></p>
+        <p class="footer-disclaimer">rep.family does not sell any physical products. this site is a curated spreadsheet of links from taobao and weidian to help buyers find reliable listings. rep.family does not support or endorse the sale of counterfeit goods. educational purposes only.</p>
+    </footer>
+
+</body>
+</html>

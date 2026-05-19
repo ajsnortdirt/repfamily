@@ -339,6 +339,16 @@ footer {
     color: white;
 }
 
+footer a {
+    color: #aaa;
+    text-decoration: underline;
+    margin-left: 8px;
+}
+
+footer a:hover {
+    color: white;
+}
+
 @media (max-width: 1024px) {
     .grid {
         grid-template-columns: repeat(3, 1fr);

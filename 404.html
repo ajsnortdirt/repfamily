@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self'; img-src 'self'; connect-src 'self' https://cloudflareinsights.com; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self'; connect-src 'self' https://cloudflareinsights.com; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>404 — rep.family</title>
     <link rel="icon" href="/assets/img/logo.webp">
     <link rel="preload" href="/assets/img/banner_no_bg.webp" as="image" type="image/webp" fetchpriority="high">
     <link rel="preload" href="/assets/img/background.webp" as="image" type="image/webp">
+    <style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif;color:#fff}html{scroll-behavior:smooth;background:#000 url('/assets/img/background.webp') center top/cover no-repeat fixed}body{max-width:1600px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;background:#000;overflow-x:hidden}header{position:sticky;top:0;z-index:100;background:#fff}nav{padding:0 40px;height:90px;display:flex;align-items:center;justify-content:space-between}.logo img{height:70px}.nav-links{list-style:none;display:flex;align-items:center;gap:48px;font-size:1.3rem}.nav-links a{color:#000}.nav-links a img{height:1.3rem;display:block}main{flex:1}@media (max-width:768px){html{background-attachment:scroll}nav{flex-direction:column;height:auto;padding:16px 20px;gap:10px}.nav-links{flex-wrap:wrap;justify-content:center;gap:20px;font-size:1rem}}</style>
     <link rel="stylesheet" href="/style.css">
     <link rel="stylesheet" href="/404.css">
     <script src="/register-sw.js" defer></script>
@@ -37,7 +38,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2026 rep.family. all rights reserved.</p>
+        <p>&copy; 2026 rep.family. all rights reserved. <a href="/privacy/">privacy policy</a></p>
         <p class="footer-disclaimer">rep.family does not sell any physical products. this site is a curated spreadsheet of links from taobao and weidian to help buyers find reliable listings. rep.family does not support or endorse the sale of counterfeit goods. educational purposes only.</p>
     </footer>
 
