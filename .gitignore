@@ -1,0 +1,14 @@
+# Local import tools (not pushed to public repo)
+analyze-sheet.js
+import-spreadsheet.js
+resize-images.js
+recategorize.js
+fix-zero-prices.js
+check-zero-prices.js
+check-img-sizes.js
+check-img-formulas.js
+*.xlsx
+*.csv
+imports/
+node_modules/
+package*.json

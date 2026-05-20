@@ -18,9 +18,7 @@
         pants:        'pants',
         shorts:       'shorts',
         jackets:      'jackets',
-        sets:         'sets',
         accessories:  'accessories',
-        electronics:  'electronics',
         watches:      'watches',
     };
     // =========================================================
